@@ -37270,6 +37270,22 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+function confermaCancella() {
+  var arrayCancella = document.getElementsByClassName("btn-danger");
+
+  for (var i = 0; i < arrayCancella.length; i++) {
+    arrayCancella[i].addEventListener("click", function () {
+      if (!window.confirm("Sei sicuro di voler cancellare il fumetto?")) {
+        event.preventDefault();
+      }
+
+      ;
+    });
+  }
+}
+
+confermaCancella();
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
