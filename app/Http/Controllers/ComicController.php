@@ -113,7 +113,6 @@ class ComicController extends Controller
                 'required',
                 Rule::in(['comic book','graphic novel'])
             ]
-            
         ]);
         // $data = $request->all();
 
