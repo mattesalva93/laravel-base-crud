@@ -103,7 +103,7 @@ class ComicController extends Controller
     public function update(Request $request, Comic $comic)
     {
         $datoValidato = $request->validate([
-            'title' => 'required | string | unique:comics,title,{comics->id}',
+            'title' => 'required | string | unique:comics,title,'.$comic->id,
             'description' => 'required | string',
             'thumb' => 'required | url',
             'price' => 'required | numeric| between:0 , 999.99',

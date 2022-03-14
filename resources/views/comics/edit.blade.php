@@ -27,8 +27,11 @@
                 <div class="form-group">
                     <label for="type">Tipologia</label>
                     <select class="form-control form-control-md" id="type" name="type">
-                        <option value="comic book" {{old("type") == "comic book" ? "selected" : null}}>Comic Book</option>
-                        <option value="graphic novel" {{old("type") == "graphic novel" ? "selected" : null}}>Graphic Novel</option>
+                        @php
+                        $selected = old("type") ?? $comic->type;
+                        @endphp
+                        <option value="comic book" {{$selected == "comic book" ? "selected" : ""}}>Comic Book</option>
+                        <option value="graphic novel" {{$selected == "graphic novel" ? "selected" : ""}}>Graphic Novel</option>
                     </select>
                 </div>
                 <div class="form-group">
