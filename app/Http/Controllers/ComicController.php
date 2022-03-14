@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Comic;
+use Illuminate\Validation\Rule;
 
 class ComicController extends Controller
 {
@@ -37,8 +38,23 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        
+        $datoValidato = $request->validate([
+            'title' => 'required | string |unique:comics,title',
+            'description' => 'required | string',
+            'thumb' => 'required | url',
+            'price' => 'required | numeric| between:0 , 999.99',
+            'series' => 'required| string',
+            'sale_date' => 'required | date_format:Y-m-d',
+            'type' =>[ 
+                'required',
+                Rule::in(['comic book','graphic novel'])
+            ]
+            
+        ]);
 
+        // $data = $request->all();
+        
         // $fumetto = new Comic();
         // $fumetto->title = $data['title'];
         // $fumetto->description = $data['description'];
@@ -50,7 +66,7 @@ class ComicController extends Controller
 
         // $fumetto->save();
 
-        $fumetto = Comic::create($data);
+        $fumetto = Comic::create($datoValidato);
 
         return redirect()->route('comics.show', $fumetto->id);
     }
@@ -86,7 +102,20 @@ class ComicController extends Controller
      */
     public function update(Request $request, Comic $comic)
     {
-        $data = $request->all();
+        $datoValidato = $request->validate([
+            'title' => 'required | string | unique:comics,title,{comics->id}',
+            'description' => 'required | string',
+            'thumb' => 'required | url',
+            'price' => 'required | numeric| between:0 , 999.99',
+            'series' => 'required| string',
+            'sale_date' => 'required | date_format:Y-m-d',
+            'type' =>[ 
+                'required',
+                Rule::in(['comic book','graphic novel'])
+            ]
+            
+        ]);
+        // $data = $request->all();
 
         // $comic->title = $data['title'];
         // $comic->description = $data['description'];
@@ -98,7 +127,7 @@ class ComicController extends Controller
 
         // $comic->save();
 
-        $comic->update($data);
+        $comic->update($datoValidato);
 
         return redirect()->route('comics.show', $comic->id);
     }
